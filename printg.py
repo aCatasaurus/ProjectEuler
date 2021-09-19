@@ -18,6 +18,7 @@ def printg(iterable, columns=None, padding=None, ostream=sys.stdout):
 
     # get appropriate padding, if none is given
     if padding == None:
+        iterable = list(iterable)
         padding = 0
 
         for item in iterable:

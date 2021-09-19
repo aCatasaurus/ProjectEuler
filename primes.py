@@ -29,23 +29,27 @@ def mygen(max):
 
 
 def esieve(num):
-    '''Uses the Sieve of Erastothenes to find all primes up to <num>.'''
-    max = int(sqrt(num))
-    a = numpy.full(max, True)
-    n = 2
-    p = []
-    while n < max:
-        p.append(n)
-        index = (n - 2)**2
-        while index < max:
-            a[index] = False
-            index += n
-        while not a[n - 2] and n < max:
-            n += 1
-    return p
+    '''Finds all primes in the range [2, <num>] via the Sieve of Erastothenes.'''
+    a = numpy.full(num + 1, True)
+
+    for i in range(2, int(sqrt(num)) + 1):
+        if a[i]:
+            for j in range(i**2, num + 1, i):
+                a[j] = False
+
+    primes = list()
+    for i in range(2, num + 1):
+        if a[i]:
+            primes.append(i)
+
+    return primes
 
 
 if __name__ == '__main__':
-    printg([num if num in primes else 0 for num in range(2, 550)])
+    sieve = esieve(primes[-1])
+    printg([
+        num if num in esieve(primes[-1]) else 0
+        for num in range(2, primes[-1] + 1)
+    ])
     print('-' * 80)
-    printg(mygen(541))
+    print(primes == sieve)
